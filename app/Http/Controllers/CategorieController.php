@@ -31,38 +31,38 @@ class CategorieController extends Controller
             ->with('success', 'Catégorie créée avec succès.');
     }
 
-    public function show(Categorie $categorie)
+    public function show(Categorie $category)
     {
-        $categorie->load('produits');
-        return view('categories.show', compact('categorie'));
+        $category->load('produits');
+        return view('categories.show',['categorie' => $category]);
     }
 
-    public function edit(Categorie $categorie)
+    public function edit(Categorie $category)
     {
-        return view('categories.edit', compact('categorie'));
+        return view('categories.edit', ['categorie' => $category]);
     }
 
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, Categorie $category)
     {
         $request->validate([
             'nom' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $categorie->update($request->all());
+        $category->update($request->all());
 
         return redirect()->route('categories.index')
             ->with('success', 'Catégorie modifiée avec succès.');
     }
 
-    public function destroy(Categorie $categorie)
+    public function destroy(Categorie $category)
     {
-        if ($categorie->produits()->count() > 0) {
+        if ($category->produits()->count() > 0) {
             return redirect()->route('categories.index')
                 ->with('error', 'Impossible de supprimer cette catégorie car elle contient des produits.');
         }
 
-        $categorie->delete();
+        $category->delete();
         
         return redirect()->route('categories.index')
             ->with('success', 'Catégorie supprimée avec succès.');
