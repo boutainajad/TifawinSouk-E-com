@@ -67,4 +67,5 @@ class CategorieController extends Controller
         return redirect()->route('categories.index')
             ->with('success', 'Catégorie supprimée avec succès.');
     }
+    
 }
